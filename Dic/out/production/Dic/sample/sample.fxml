@@ -113,14 +113,14 @@
       <AnchorPane fx:id="panetranslate" layoutX="301.0" layoutY="-5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="887.0" style="-fx-background-color: #23CE6B;">
          <children>
             <WebView fx:id="webView" layoutX="432.0" layoutY="258.0" prefHeight="136.0" prefWidth="380.0" />
-            <ListView fx:id="listView" layoutX="14.0" layoutY="255.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#setKeyPressed" prefHeight="142.0" prefWidth="374.0">
+            <ListView fx:id="listView" layoutX="14.0" layoutY="255.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#clickinlist" prefHeight="142.0" prefWidth="374.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </ListView>
             <Button fx:id="translate" layoutX="62.0" layoutY="425.0" mnemonicParsing="false" onAction="#Submit" prefHeight="47.0" prefWidth="170.0" text="translate" />
-            <TextField fx:id="inPut" layoutX="234.0" layoutY="155.0" onAction="#setKeyBoard" prefHeight="31.0" prefWidth="291.0" />
-            <Button fx:id="Speak" layoutX="487.0" layoutY="433.0" mnemonicParsing="false" onAction="#handle" text="Speak" />
+            <TextField fx:id="inPut" layoutX="234.0" layoutY="155.0" onAction="#inputfrkb" prefHeight="31.0" prefWidth="291.0" />
+            <Button fx:id="Speak" layoutX="487.0" layoutY="433.0" mnemonicParsing="false" onAction="#Voice" text="Speak" />
          </children>
          <cursor>
             <Cursor fx:constant="DEFAULT" />

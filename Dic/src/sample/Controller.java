@@ -39,7 +39,7 @@ public class Controller {
     @FXML
     Button translate;
     @FXML
-    Button search, insertbutton;
+    Button insertbutton;
     @FXML
     ListView listView;
     @FXML
@@ -53,11 +53,19 @@ public class Controller {
     @FXML
     AnchorPane panetranslate, paneinsert, paneedit, panedelete;
 
-    /*
-        các Phương thức
-    */
 
-    public void setKeyBoard() {
+
+    public String timTu(String a) throws SQLException {
+        String c="";
+        Statement statement = SQLConnect.getConnection().createStatement();
+        String Sql = "SELECT * FROM tbl_edict WHERE word = '"+a+"'";
+        ResultSet rs = statement.executeQuery(Sql);
+        if(rs.next())
+            return (rs.getString("detail"));
+        else return "";
+    }
+
+    public void inputfrkb() {
         // set sự kiện cho phím Enter
         inPut.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -65,17 +73,17 @@ public class Controller {
                 text = text.toLowerCase();
                 if ("".equals(text)) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("THÔNG BÁO");
-                    alert.setHeaderText("                       TỪ CHƯA ĐƯỢC NHẬP!");
-                    alert.setContentText("*WARNING: FBI");
+                    alert.setTitle("FBI WARNING ");
+                    alert.setHeaderText("                       Từ chưa được nhập");
+                    alert.setContentText("Có vẻ như bạn chưa nhập từ");
                     alert.show();
                 }else {
                     try {
                         if (timTu(text).equals("")) {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("THÔNG BÁO");
+                            alert.setTitle("ERROR");
                             alert.setHeaderText("                TỪ VỪA NHẬP KHÔNG HỢP LỆ!");
-                            alert.setContentText("*ERROR: 404");
+                            alert.setContentText("Bạn vừa nhập sai từ hoặc bạn vừa cào phím");
                             alert.show();
                         }
                         else webView.getEngine().loadContent(timTu(text));
@@ -90,10 +98,10 @@ public class Controller {
 
 
     //hàm hiện từ lên listview và gợi ý từ tìm kiếm
-    public void searchWord() throws SQLException {
+    public void searchsuggest() throws SQLException {
         int i=1;
         ArrayList<String> DS1 = new ArrayList();
-        Statement statement = MySQLConnUtils.getJDBCConnection().createStatement();
+        Statement statement = SQLConnect.getConnection().createStatement();
         String Sql = "SELECT * FROM tbl_edict";
         ResultSet rs = statement.executeQuery(Sql);
         while(rs.next()){
@@ -121,8 +129,8 @@ public class Controller {
         }
     }
 
-    public void setKeyPressed() throws SQLException{
-        //TODO : bắt Mouse Event khi click vào listView
+    public void clickinlist() throws SQLException{
+
         listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             public void handle(MouseEvent click) {
@@ -150,26 +158,26 @@ public class Controller {
             text = inPut.getText();
             text = text.toLowerCase();      // chuyển về chữ thường
 
-            if ("".equals(text)) {           // nếu chưa nhập vào
+            if ("".equals(text)) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("THÔNG BÁO");
+                alert.setTitle("FBI WARNING ");
                 alert.setHeaderText("                       TỪ CHƯA ĐƯỢC NHẬP!");
-                alert.setContentText("*WARNING: FBI");
+                alert.setContentText("Bạn chưa nhập từ vào");
                 alert.show();
-            } else if (timTu(text).equals("")) {    // nếu nhập sai
+            } else if (timTu(text).equals("")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("THÔNG BÁO");
+                alert.setTitle("ERROR");
                 alert.setHeaderText("                TỪ VỪA NHẬP KHÔNG HỢP LỆ!");
-                alert.setContentText("*ERROR: 404");
+                alert.setContentText("Bạn nhập sai hoặc là bạn vừa cào phím");
                 alert.show();
             } else webView.getEngine().loadContent(timTu(text));
-            }
+        }
 
     }
     public void Click(ActionEvent event)throws SQLException{
         if(event.getSource() == Translate) {
             panetranslate.toFront();
-            searchWord();
+            searchsuggest();
 
         }
         else if(event.getSource() == Insert ) {
@@ -185,7 +193,7 @@ public class Controller {
     }
     public boolean CheckWordInDataBase(String word) throws SQLException {
         String c="";
-        Statement statement = MySQLConnUtils.getJDBCConnection().createStatement();
+        Statement statement = SQLConnect.getConnection().createStatement();
         String Sql = "SELECT * FROM tbl_edict WHERE word = '"+word+"'";
         ResultSet rs = statement.executeQuery(Sql);
         if(rs.next())
@@ -194,7 +202,7 @@ public class Controller {
     }
 
         public void SetInsertButton(ActionEvent event) throws SQLException {
-        Statement statement = MySQLConnUtils.getJDBCConnection().createStatement();
+        Statement statement = SQLConnect.getConnection().createStatement();
 
         String word = inputword.getText();
         String detail = inputexplain.getText();
@@ -228,7 +236,7 @@ public class Controller {
         }
         }
         public void SetDeleteButton(ActionEvent event) throws SQLException {
-            Statement statement = MySQLConnUtils.getJDBCConnection().createStatement();
+            Statement statement = SQLConnect.getConnection().createStatement();
 
             String word = inputdelete.getText();
 
@@ -258,12 +266,11 @@ public class Controller {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("THÔNG BÁO");
                 alert.setHeaderText("               TỪ KHÔNG CÓ SẴN!");
-                alert.setContentText("*WARNING: FBI");
                 alert.show();
             }
         }
         public void SetEditButton(ActionEvent event) throws SQLException {
-            Statement statement = MySQLConnUtils.getJDBCConnection().createStatement();
+            Statement statement = SQLConnect.getConnection().createStatement();
             String word = inputeditword.getText();
             String detail = inputeditexplain.getText();
 
@@ -275,7 +282,6 @@ public class Controller {
                     Alert delete = new Alert(Alert.AlertType.WARNING);
                     delete.setTitle("THÔNG BÁO");
                     delete.setHeaderText("               ĐÃ SỬA!");
-                    delete.setContentText("*WARNING: FBI");
                     delete.show();
                 }
 
@@ -284,33 +290,12 @@ public class Controller {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("THÔNG BÁO");
                 alert.setHeaderText("               TỪ KHÔNG CÓ SẴN!");
-                alert.setContentText("*WARNING: FBI");
+
                 alert.show();
             }
         }
 
 
-    /*
-    Các hàm bổ sung cho phần bên trên
-    */
-
-
-    public void initialize(URL location, ResourceBundle resources) {
-        setKeyBoard();
-    }
-
-    ArrayList<String> DS1 = new ArrayList();
-
-
-    public String timTu(String a) throws SQLException {
-        String c="";
-        Statement statement = MySQLConnUtils.getJDBCConnection().createStatement();
-        String Sql = "SELECT * FROM tbl_edict WHERE word = '"+a+"'";
-        ResultSet rs = statement.executeQuery(Sql);
-        if(rs.next())
-            return (rs.getString("detail"));
-        else return "";
-    }
 
     private void buttonClicked(){
         String message = "";
@@ -327,7 +312,7 @@ public class Controller {
         }
     }
 
-    public void  handle(ActionEvent event )  {
+    public void  Voice(ActionEvent event )  {
         VoiceManager voiceManager = VoiceManager.getInstance();
 
         com.sun.speech.freetts.Voice syntheticVoice = voiceManager.getVoice("kevin16");
