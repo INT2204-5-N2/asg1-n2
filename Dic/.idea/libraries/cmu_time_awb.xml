@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="cmu_time_awb">
+    <CLASSES>
+      <root url="jar://G:/thuVien/cmu_time_awb.jar!/" />
+      <root url="jar://G:/thuVien/cmu_us_kal.jar!/" />
+      <root url="jar://G:/thuVien/com.mysql.jdbc_5.1.5.jar!/" />
+      <root url="jar://G:/thuVien/en_us.jar!/" />
+      <root url="jar://G:/thuVien/freetts-jsapi10.jar!/" />
+      <root url="jar://G:/thuVien/freetts.jar!/" />
+      <root url="jar://G:/thuVien/gtranslateapi-1.0.jar!/" />
+      <root url="jar://G:/thuVien/jl1.0.jar!/" />
+      <root url="jar://G:/thuVien/mbrola.jar!/" />
+      <root url="jar://G:/thuVien/mysql-connector-java-5.1.47.jar!/" />
+      <root url="jar://G:/thuVien/resty-0.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
